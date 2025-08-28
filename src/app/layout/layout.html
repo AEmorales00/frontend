@@ -1,0 +1,20 @@
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">TecNova</div>
+    <nav>
+      <a routerLink="/dashboard" routerLinkActive="active">📊 Dashboard</a>
+      <a routerLink="/productos" routerLinkActive="active">📦 Productos</a>
+      <a routerLink="/ventas" routerLinkActive="active">🧾 Ventas</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <header class="topbar">
+      <div class="title">SGC • Inventario</div>
+      <div class="user">👤 Admin</div>
+    </header>
+    <section class="page">
+      <router-outlet></router-outlet>
+    </section>
+  </main>
+</div>

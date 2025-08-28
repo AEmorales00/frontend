@@ -1,0 +1,13 @@
+<h2>Productos</h2>
+<a routerLink="/productos/crear" class="btn">+ Nuevo</a>
+<a routerLink="/productos/importar" class="btn">⤓ Importar</a>
+<table class="table">
+  <tr><th>#</th><th>Nombre</th><th>Precio</th><th>Stock</th><th></th></tr>
+  <tr *ngFor="let p of productos; let i = index">
+    <td>{{i+1}}</td><td>{{p.name}}</td><td>{{p.price | currency:'GTQ'}}</td><td>{{p.stock}}</td>
+    <td>
+      <a [routerLink]="['/productos/editar', p.id]">Editar</a>
+      <button (click)="eliminar(p.id)">Eliminar</button>
+    </td>
+  </tr>
+</table>

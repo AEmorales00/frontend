@@ -1,0 +1,40 @@
+<h2>📦 Productos</h2>
+
+<div *ngIf="loading">Cargando inventario…</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<div class="actions">
+  <a class="btn" routerLink="/productos/crear">+ Nuevo</a>
+  <a class="btn" routerLink="/productos/importar">⤓ Importar</a>
+</div>
+
+<table class="table" *ngIf="!loading && !error">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nombre</th>
+      <th>Descripción</th>
+      <th>Código</th>
+      <th class="num">Precio</th>
+      <th class="num">Stock</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of productos; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ p.name }}</td>
+      <td>{{ p.description || '—' }}</td>
+      <td>{{ p.barcode || '—' }}</td>
+      <td class="num">{{ p.price | number:'1.2-2' }}</td>
+      <td class="num" [class.low]="p.stock <= 3">{{ p.stock }}</td>
+      <td class="actions">
+        <a class="btn btn-sm" [routerLink]="['/productos/editar', p.id]">✏️ Editar</a>
+        <button class="btn btn-sm btn-danger" (click)="eliminar(p.id)">🗑️ Eliminar</button>
+      </td>
+    </tr>
+    <tr *ngIf="!productos.length">
+      <td colspan="7" class="empty">No hay productos registrados</td>
+    </tr>
+  </tbody>
+</table>

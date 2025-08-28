@@ -1,0 +1,27 @@
+.container {
+  max-width: 900px;
+  margin: auto;
+
+  .card {
+    border-radius: 1rem;
+    background-color: #f9fbfd;
+
+    h2 {
+      font-weight: bold;
+      color: #333;
+    }
+
+    label {
+      font-weight: 600;
+    }
+
+    input {
+      border-radius: 0.5rem;
+    }
+
+    button {
+      padding: 10px 30px;
+      font-size: 1rem;
+    }
+  }
+}

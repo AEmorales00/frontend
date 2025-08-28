@@ -1,0 +1,8 @@
+.shell{display:grid;grid-template-columns:260px 1fr;min-height:100vh;background:#f5f7fb}
+.sidebar{background:#0f172a;color:#fff;padding:20px}
+.sidebar .brand{font-weight:700;margin-bottom:16px}
+.sidebar nav a{display:block;color:#cbd5e1;padding:10px;border-radius:8px;text-decoration:none;margin-bottom:6px}
+.sidebar nav a.active,.sidebar nav a:hover{background:#1e293b;color:#fff}
+.content{display:flex;flex-direction:column}
+.topbar{background:#fff;border-bottom:1px solid #e5e7eb;padding:12px 20px;display:flex;justify-content:space-between}
+.page{padding:20px}

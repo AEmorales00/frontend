@@ -1,0 +1,85 @@
+<div class="container mt-5">
+  <div class="card p-4 shadow-sm">
+    <h2 class="mb-4 text-center">📦 Agregar inventario</h2>
+    <form (ngSubmit)="guardarInventario()" [formGroup]="formularioInventario">
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input id="nombre" class="form-control" formControlName="nombre" placeholder="Ej. Laptop" />
+        </div>
+        <div class="col-md-4">
+          <label for="descripcion" class="form-label">Descripción</label>
+          <input id="descripcion" class="form-control" formControlName="descripcion" placeholder="Ej. Dell Inspiron" />
+        </div>
+        <div class="col-md-4">
+          <label for="cantidad" class="form-label">Cantidad</label>
+          <input id="cantidad" type="number" class="form-control" formControlName="cantidad" />
+        </div>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-primary" type="submit" [disabled]="formularioInventario.invalid">
+          💾 Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <h2 class="mb-4 text-center">📋 Lista de Inventario</h2>
+
+  <table class="table table-striped table-bordered shadow">
+    <thead class="table-dark text-center">
+      <tr>
+        <th>#</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Cantidad</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody class="text-center">
+      <tr *ngFor="let item of inventario; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>
+          <ng-container *ngIf="!editando || editando.id !== item.id; else editNombre">
+            {{ item.name }}
+          </ng-container>
+          <ng-template #editNombre>
+            <input class="form-control" [(ngModel)]="editando.name">
+          </ng-template>
+        </td>
+
+        <td>
+          <ng-container *ngIf="!editando || editando.id !== item.id; else editDesc">
+            {{ item.description }}
+          </ng-container>
+          <ng-template #editDesc>
+            <input class="form-control" [(ngModel)]="editando.description">
+          </ng-template>
+        </td>
+
+        <td>
+          <ng-container *ngIf="!editando || editando.id !== item.id; else editQty">
+            {{ item.quantity }}
+          </ng-container>
+          <ng-template #editQty>
+            <input type="number" class="form-control" [(ngModel)]="editando.quantity">
+          </ng-template>
+        </td>
+
+        <td>
+          <ng-container *ngIf="!editando || editando.id !== item.id; else accionesEdicion">
+            <button class="btn btn-sm btn-warning me-2" (click)="editarInventario(item)">✏️ Editar</button>
+            <button class="btn btn-sm btn-danger" (click)="eliminarInventario(item.id)">🗑️ Eliminar</button>
+          </ng-container>
+          <ng-template #accionesEdicion>
+            <button class="btn btn-sm btn-success me-2" (click)="guardarCambios()">💾 Guardar</button>
+            <button class="btn btn-sm btn-secondary" (click)="cancelarEdicion()">↩️ Cancelar</button>
+          </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

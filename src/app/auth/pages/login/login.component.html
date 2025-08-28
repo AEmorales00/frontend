@@ -1,0 +1,19 @@
+<div class="login-card">
+  <h2>Iniciar sesión</h2>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <label>Email</label>
+    <input type="email" formControlName="email" placeholder="tu@email.com" />
+    <small *ngIf="form.controls['email'].invalid && form.controls['email'].touched">Email inválido</small>
+
+    <label>Contraseña</label>
+    <input type="password" formControlName="password" placeholder="********" />
+    <small *ngIf="form.controls['password'].invalid && form.controls['password'].touched">Campo requerido</small>
+
+    <button type="submit" [disabled]="form.invalid || loading">
+      {{ loading ? 'Validando...' : 'Ingresar' }}
+    </button>
+
+    <p class="error" *ngIf="error">{{ error }}</p>
+  </form>
+</div>
