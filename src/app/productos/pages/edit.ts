@@ -45,7 +45,10 @@ export class Edit implements OnInit {
         });
         this.loadingData = false;
       },
-      error: (e: any) => { this.error = e?.error?.message || 'No se pudo cargar el producto'; this.loadingData = false; }
+      error: (e: any) => {
+        this.error = e?.status === 404 ? 'Producto no encontrado' : (e?.error?.message || 'No se pudo cargar el producto');
+        this.loadingData = false;
+      }
     });
   }
 
@@ -53,15 +56,16 @@ export class Edit implements OnInit {
     if (this.form.invalid) { this.form.markAllAsTouched(); return; }
     this.loading = true; this.error = '';
 
-    // IMPORTANTE: usa la clave que espera tu backend:
-    // - Si espera "quantity":
-    const payload = {
+    // Payload esperado por la API
+    const payload: any = {
       name: this.form.value.name!,
-      description: this.form.value.description || '',
-      barcode: this.form.value.barcode || null,
       price: Number(this.form.value.price),
-      quantity: Number(this.form.value.stock)   // <-- o stock: Number(...) si el backend usa "stock"
+      stock: Math.trunc(Number(this.form.value.stock))
     };
+    const desc = (this.form.value.description || '').trim();
+    const code = (this.form.value.barcode || '').trim();
+    if (desc) payload.description = desc;
+    if (code) payload.barcode = code;
 
     this.products.update(this.id, payload).subscribe({
       next: () => {

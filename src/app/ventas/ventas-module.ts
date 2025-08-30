@@ -6,12 +6,14 @@ import { VentasRoutingModule } from './ventas-routing-module';
 import { Ventas } from './ventas';
 import { Nueva } from './pages/nueva';
 import { Historial } from './pages/historial';
+import { Detalle } from './pages/detalle';
 
 @NgModule({
   declarations: [
     Ventas,
     Nueva,
-    Historial
+    Historial,
+    Detalle
   ],
   imports: [
     CommonModule,

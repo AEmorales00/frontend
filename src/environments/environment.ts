@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiBase: 'http://localhost:4000' // tu backend
+  apiBase: 'http://127.0.0.1:4000' // tu backend
 };

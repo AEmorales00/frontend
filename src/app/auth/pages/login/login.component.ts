@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({ 
   selector: 'app-login', 
@@ -16,9 +17,10 @@ export class LoginComponent {
   error = '';
 
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private auth: AuthService
   ) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -34,12 +36,18 @@ export class LoginComponent {
     
     this.loading = true;
     this.error = '';
-    
-    this.http.post<any>(`${environment.apiBase}/auth/login`, this.form.value).subscribe({
-      next: (res) => {
-        console.log('Login exitoso');
-        localStorage.setItem('token', res.token);   // <-- MISMA CLAVE que el guard
-        this.router.navigateByUrl('/dashboard');    // <-- ABSOLUTO
+
+    // Usa AuthService y acepta 'token' o 'accessToken'
+    this.auth.login(this.form.value).subscribe({
+      next: (res: any) => {
+        const token = res?.accessToken || res?.token;
+        if (!token) {
+          this.error = 'Respuesta de login inválida';
+          this.loading = false;
+          return;
+        }
+        this.auth.token = token; // guarda en localStorage con la misma clave
+        this.router.navigateByUrl('/dashboard');
       },
       error: (err) => {
         this.error = err?.error?.message || 'Error de autenticación';

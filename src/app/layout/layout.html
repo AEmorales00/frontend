@@ -11,7 +11,12 @@
   <main class="content">
     <header class="topbar">
       <div class="title">SGC • Inventario</div>
-      <div class="user">👤 Admin</div>
+      <div class="user-menu" (click)="$event.stopPropagation()">
+        <button class="user-btn" (click)="toggleUserMenu($event)">👤 Admin ▾</button>
+        <div class="menu" *ngIf="userOpen">
+          <a (click)="logout()">Cerrar sesión</a>
+        </div>
+      </div>
     </header>
     <section class="page">
       <router-outlet></router-outlet>

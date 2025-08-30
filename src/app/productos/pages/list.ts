@@ -35,7 +35,11 @@ export class List implements OnInit {
     });
   }
 
-  eliminar(id: number): void {
+  eliminar(id?: number): void {
+    if (!id) {
+      alert('ID de producto no válido');
+      return;
+    }
     if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
       this.productsService.remove(id).subscribe({
         next: () => {
@@ -43,7 +47,12 @@ export class List implements OnInit {
           this.productos = this.productos.filter(p => p.id !== id);
         },
         error: (err) => {
-          alert('Error al eliminar el producto');
+          const msg = err?.status === 409
+            ? 'No se puede eliminar: el producto tiene ventas asociadas o está en uso.'
+            : err?.status === 404
+              ? 'Producto no encontrado.'
+              : (err?.error?.message || 'Error al eliminar el producto');
+          alert(msg);
           console.error('Error deleting product:', err);
         }
       });

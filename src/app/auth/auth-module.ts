@@ -6,7 +6,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { AuthComponent } from './auth.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  // dentro de /auth, redirige a 'login' de forma relativa
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent }
 ];
 

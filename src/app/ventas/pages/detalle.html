@@ -1,0 +1,36 @@
+<div *ngIf="loading">Cargando detalle…</div>
+<div class="msg err" *ngIf="error">{{ error }}</div>
+
+<div *ngIf="!loading && !error && venta">
+  <div class="header">
+    <a class="btn" routerLink="/ventas/historial">⬅ Volver</a>
+    <h3>Venta #{{ venta.id || '-' }}</h3>
+  </div>
+  <div class="meta">
+    <div><strong>Fecha:</strong> {{ venta.createdAt || venta.date || '—' }}</div>
+    <div><strong>Total ítems:</strong> {{ venta.items?.length || 0 }}</div>
+    <div><strong>Total:</strong> {{ total() | number:'1.2-2' }}</div>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Producto</th>
+        <th class="num">Precio</th>
+        <th class="num">Cantidad</th>
+        <th class="num">Subtotal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let it of (venta.items || []); let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ nameFor(it) }}</td>
+        <td class="num">{{ it.price || 0 | number:'1.2-2' }}</td>
+        <td class="num">{{ it.quantity || 0 }}</td>
+        <td class="num">{{ (it.price || 0) * (it.quantity || 0) | number:'1.2-2' }}</td>
+      </tr>
+      <tr *ngIf="!(venta.items?.length)"><td colspan="5" class="empty">Sin ítems</td></tr>
+    </tbody>
+  </table>
+</div>

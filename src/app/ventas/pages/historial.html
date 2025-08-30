@@ -1,1 +1,24 @@
-<p>historial works!</p>
+<div *ngIf="loading">Cargando historial…</div>
+<div class="msg err" *ngIf="error">{{ error }}</div>
+
+<table class="table" *ngIf="!loading && !error">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Fecha</th>
+      <th>Total ítems</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let v of ventas; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ v.createdAt || v.date || '—' }}</td>
+      <td>{{ (v.items?.length) || '—' }}</td>
+      <td><a class="btn" [routerLink]="['/ventas/historial', v.id]">Ver</a></td>
+    </tr>
+    <tr *ngIf="!ventas.length">
+      <td colspan="4" class="empty">Sin registros</td>
+    </tr>
+  </tbody>
+</table>

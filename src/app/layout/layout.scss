@@ -6,3 +6,9 @@
 .content{display:flex;flex-direction:column}
 .topbar{background:#fff;border-bottom:1px solid #e5e7eb;padding:12px 20px;display:flex;justify-content:space-between}
 .page{padding:20px}
+
+.user-menu{position:relative}
+.user-btn{background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:6px 10px;cursor:pointer}
+.menu{position:absolute;right:0;top:38px;background:#fff;border:1px solid #e5e7eb;border-radius:8px;min-width:160px;box-shadow:0 8px 16px rgba(0,0,0,.08);}
+.menu a{display:block;padding:10px 12px;text-decoration:none;color:#111827;cursor:pointer}
+.menu a:hover{background:#f3f4f6}

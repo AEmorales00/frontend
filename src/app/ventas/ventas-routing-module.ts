@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { Ventas } from './ventas';
 import { Nueva } from './pages/nueva';
 import { Historial } from './pages/historial';
+import { Detalle } from './pages/detalle';
 
 const routes: Routes = [
   {
@@ -11,6 +12,7 @@ const routes: Routes = [
     children: [
       { path: 'nueva', component: Nueva },
       { path: 'historial', component: Historial },
+      { path: 'historial/:id', component: Detalle },
       { path: '', redirectTo: 'nueva', pathMatch: 'full' }
     ]
   }

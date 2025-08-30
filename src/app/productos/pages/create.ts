@@ -28,15 +28,16 @@ export class Create {
     if (this.form.invalid) { this.form.markAllAsTouched(); return; }
     this.loading = true; this.error = '';
 
-    // adapta las claves a tu backend si usa quantity vs stock
-    const payload = {
+    // Payload esperado por la API: name, description, barcode, price, stock
+    const payload: any = {
       name: this.form.value.name!,
-      description: this.form.value.description || '',
-      barcode: this.form.value.barcode || null,
       price: Number(this.form.value.price),
-      quantity: Number(this.form.value.stock)   // <- si tu API espera "quantity"
-      // stock: Number(this.form.value.stock)   // <- si tu API espera "stock"
+      stock: Math.trunc(Number(this.form.value.stock))
     };
+    const desc = (this.form.value.description || '').trim();
+    const code = (this.form.value.barcode || '').trim();
+    if (desc) payload.description = desc;
+    if (code) payload.barcode = code;
 
     this.products.create(payload).subscribe({
       next: () => {

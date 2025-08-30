@@ -6,6 +6,7 @@ import { InventoryService } from '../../services/inventory';
   selector: 'app-inventory',
   standalone: false,
   templateUrl: './inventory.html',
+  styleUrl: './inventory.scss'
 })
 export class InventoryComponent implements OnInit {
   formularioInventario: FormGroup;
@@ -29,8 +30,8 @@ export class InventoryComponent implements OnInit {
 
   cargarInventario(): void {
     this.inventoryService.getInventory().subscribe({
-      next: (datos) => this.inventario = datos,
-      error: (err) => console.error('Error al obtener inventario:', err)
+      next: (datos: any) => this.inventario = datos,
+      error: (err: any) => console.error('Error al obtener inventario:', err)
     });
   }
 
@@ -43,12 +44,12 @@ export class InventoryComponent implements OnInit {
       description: formData.descripcion,
       quantity: formData.cantidad,
     }).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         alert('Inventario guardado');
         this.formularioInventario.reset({ cantidad: 0 });
         this.cargarInventario(); // Recargar inventario después de guardar
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Error:', error);
         alert('Error al guardar inventario');
       }
