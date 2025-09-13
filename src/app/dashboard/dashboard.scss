@@ -3,3 +3,7 @@
 .label { color:#6b7280; font-size:14px; }
 .value { font-size:28px; font-weight:700; color:#111827; }
 .error { color:#b91c1c; margin-bottom:10px; }
+
+@media (max-width: 900px){
+  .grid { grid-template-columns: 1fr; }
+}

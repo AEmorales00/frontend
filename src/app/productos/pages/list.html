@@ -8,7 +8,8 @@
   <a class="btn" routerLink="/productos/importar">⤓ Importar</a>
 </div>
 
-<table class="table" *ngIf="!loading && !error">
+<div class="table-responsive" *ngIf="!loading && !error">
+<table class="table">
   <thead>
     <tr>
       <th>#</th>
@@ -38,3 +39,4 @@
     </tr>
   </tbody>
 </table>
+</div>

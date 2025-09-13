@@ -5,6 +5,8 @@ table.table {
   border-collapse: collapse;
   overflow: hidden;
 }
+.table-responsive{ width:100%; overflow-x:auto; }
+.table{ min-width: 700px; }
 .table thead { background:#0f172a; color:#fff; }
 .table th, .table td { padding: 10px 12px; border-bottom:1px solid #e5e7eb; }
 .table .num { text-align: right; }
@@ -19,3 +21,7 @@ select, input[type=number] { width: 100%; padding: 6px 8px; border:1px solid #cb
 .footer { margin-top: 12px; text-align: right; }
 .msg.ok { color:#065f46; margin-top:10px; }
 .msg.err { color:#b91c1c; margin-top:10px; }
+
+@media (max-width: 900px){
+  .table{ min-width: 600px; }
+}

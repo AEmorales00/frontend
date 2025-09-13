@@ -5,6 +5,7 @@
     <strong>Total: {{ total() | number:'1.2-2' }}</strong>
   </div>
 
+  <div class="table-responsive">
   <table class="table">
     <thead>
       <tr>
@@ -30,6 +31,7 @@
       </tr>
     </tbody>
   </table>
+  </div>
 
   <div class="footer">
     <button class="btn btn-primary" type="submit" [disabled]="loading || form.invalid">{{ loading ? 'Guardando…' : 'Registrar venta' }}</button>

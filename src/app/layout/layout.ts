@@ -10,6 +10,7 @@ import { AuthService } from '../core/services/auth.service';
 })
 export class Layout {
   userOpen = false;
+  sidebarOpen = false;
 
   constructor(private auth: AuthService, private router: Router) {}
 
@@ -18,11 +19,16 @@ export class Layout {
     this.userOpen = !this.userOpen;
   }
 
+  toggleSidebar(event?: Event) {
+    if (event) event.stopPropagation();
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
   logout() {
     this.auth.logout();
     this.router.navigateByUrl('/auth/login');
   }
 
   @HostListener('document:click')
-  closeMenus() { this.userOpen = false; }
+  closeMenus() { this.userOpen = false; this.sidebarOpen = false; }
 }

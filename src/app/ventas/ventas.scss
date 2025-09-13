@@ -42,3 +42,10 @@
   padding: 20px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
+
+.table-responsive{ width:100%; overflow-x:auto; }
+.table{ min-width: 700px; }
+
+@media (max-width: 900px){
+  .table{ min-width: 600px; }
+}

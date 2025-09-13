@@ -1,5 +1,5 @@
-<div class="shell">
-  <aside class="sidebar">
+<div class="shell" (click)="sidebarOpen=false">
+  <aside class="sidebar" [class.open]="sidebarOpen" (click)="$event.stopPropagation()">
     <div class="brand">TecNova</div>
     <nav>
       <a routerLink="/dashboard" routerLinkActive="active">📊 Dashboard</a>
@@ -10,7 +10,10 @@
 
   <main class="content">
     <header class="topbar">
-      <div class="title">SGC • Inventario</div>
+      <div class="title">
+        <button class="hamburger" (click)="toggleSidebar($event)">☰</button>
+        SGC • Inventario
+      </div>
       <div class="user-menu" (click)="$event.stopPropagation()">
         <button class="user-btn" (click)="toggleUserMenu($event)">👤 Admin ▾</button>
         <div class="menu" *ngIf="userOpen">
@@ -22,4 +25,5 @@
       <router-outlet></router-outlet>
     </section>
   </main>
+  <div class="backdrop" *ngIf="sidebarOpen" (click)="toggleSidebar($event)"></div>
 </div>

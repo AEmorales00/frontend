@@ -12,6 +12,7 @@
     <div><strong>Total:</strong> {{ total() | number:'1.2-2' }}</div>
   </div>
 
+  <div class="table-responsive">
   <table class="table">
     <thead>
       <tr>
@@ -33,4 +34,5 @@
       <tr *ngIf="!(venta.items?.length)"><td colspan="5" class="empty">Sin ítems</td></tr>
     </tbody>
   </table>
+  </div>
 </div>
