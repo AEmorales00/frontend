@@ -1,29 +1,28 @@
-<div class="shell" (click)="sidebarOpen=false">
-  <aside class="sidebar" [class.open]="sidebarOpen" (click)="$event.stopPropagation()">
-    <div class="brand">TecNova</div>
-    <nav>
-      <a routerLink="/dashboard" routerLinkActive="active">📊 Dashboard</a>
-      <a routerLink="/productos" routerLinkActive="active">📦 Productos</a>
-      <a routerLink="/ventas" routerLinkActive="active">🧾 Ventas</a>
-    </nav>
-  </aside>
+<div class="layout">
+  <header class="layout-header">
+    <button class="sidebar-toggle" (click)="toggleSidebar()">☰</button>
+    <span class="app-title">SGC • Inventario</span>
+    <div class="spacer"></div>
+    <div class="user-actions">
+      <button class="user-menu" (click)="logout()">
+        <span>👤</span>
+        <span class="user-name">Admin</span>
+      </button>
+    </div>
+  </header>
 
-  <main class="content">
-    <header class="topbar">
-      <div class="title">
-        <button class="hamburger" (click)="toggleSidebar($event)">☰</button>
-        SGC • Inventario
-      </div>
-      <div class="user-menu" (click)="$event.stopPropagation()">
-        <button class="user-btn" (click)="toggleUserMenu($event)">👤 Admin ▾</button>
-        <div class="menu" *ngIf="userOpen">
-          <a (click)="logout()">Cerrar sesión</a>
-        </div>
-      </div>
-    </header>
-    <section class="page">
-      <router-outlet></router-outlet>
-    </section>
+  <nav class="sidebar">
+    <ul class="menu">
+      <li *ngFor="let item of menuItems">
+        <a [routerLink]="item.link" class="menu-item">
+          <span class="menu-icon">📊</span>
+          <span class="menu-title">{{ item.title }}</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
   </main>
-  <div class="backdrop" *ngIf="sidebarOpen" (click)="toggleSidebar($event)"></div>
 </div>

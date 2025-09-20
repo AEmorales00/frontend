@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService, Product } from '../../core/services/products.service';
+import { AlertService } from '../../core/alert.service';
 
 @Component({
   selector: 'app-list',
@@ -12,7 +13,7 @@ export class List implements OnInit {
   error: string | null = null;
   productos: Product[] = [];
 
-  constructor(private productsService: ProductsService) {}
+  constructor(private productsService: ProductsService, private alerts: AlertService) {}
 
   ngOnInit(): void {
     this.loadProducts();
@@ -35,27 +36,26 @@ export class List implements OnInit {
     });
   }
 
-  eliminar(id?: number): void {
+  async eliminar(id?: number): Promise<void> {
     if (!id) {
-      alert('ID de producto no válido');
+      this.alerts.info('ID de producto no válido');
       return;
     }
-    if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
-      this.productsService.remove(id).subscribe({
-        next: () => {
-          // Remove the product from the local array
-          this.productos = this.productos.filter(p => p.id !== id);
-        },
-        error: (err) => {
-          const msg = err?.status === 409
-            ? 'No se puede eliminar: el producto tiene ventas asociadas o está en uso.'
-            : err?.status === 404
-              ? 'Producto no encontrado.'
-              : (err?.error?.message || 'Error al eliminar el producto');
-          alert(msg);
-          console.error('Error deleting product:', err);
-        }
-      });
-    }
+    const ok = await this.alerts.confirm('¿Estás seguro de que quieres eliminar este producto?');
+    if (!ok) return;
+    this.productsService.remove(id).subscribe({
+      next: () => {
+        this.productos = this.productos.filter(p => p.id !== id);
+      },
+      error: (err) => {
+        const msg = err?.status === 409
+          ? 'No se puede eliminar: el producto tiene ventas asociadas o está en uso.'
+          : err?.status === 404
+            ? 'Producto no encontrado.'
+            : (err?.error?.message || 'Error al eliminar el producto');
+        this.alerts.error(msg);
+        console.error('Error deleting product:', err);
+      }
+    });
   }
 }

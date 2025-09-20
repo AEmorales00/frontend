@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -9,6 +10,7 @@ import { AuthModule } from './auth/auth-module';
 import { PagesModule } from './pages/pages.module';
 import { LayoutModule } from './layout/layout-module';
 
+
 import { App } from './app';
 
 @NgModule({
@@ -17,6 +19,7 @@ import { App } from './app';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,

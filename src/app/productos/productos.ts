@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../core/services/products.service';
+import { AlertService } from '../core/alert.service';
 
 @Component({
   selector: 'app-productos',
@@ -10,7 +11,7 @@ import { ProductsService } from '../core/services/products.service';
 export class Productos implements OnInit {
   productos: any[] = [];
 
-  constructor(private productsService: ProductsService) {}
+  constructor(private productsService: ProductsService, private alerts: AlertService) {}
 
   ngOnInit(): void {
     this.loadProductos();
@@ -23,14 +24,14 @@ export class Productos implements OnInit {
     });
   }
 
-  eliminar(id: number): void {
-    if (confirm('¿Está seguro de eliminar este producto?')) {
-      this.productsService.remove(id).subscribe({
-        next: () => {
-          this.loadProductos(); // Reload the list
-        },
-        error: (err) => console.error('Error deleting product:', err)
-      });
-    }
+  async eliminar(id: number): Promise<void> {
+    const ok = await this.alerts.confirm('¿Está seguro de eliminar este producto?');
+    if (!ok) return;
+    this.productsService.remove(id).subscribe({
+      next: () => {
+        this.loadProductos(); // Reload the list
+      },
+      error: (err) => console.error('Error deleting product:', err)
+    });
   }
 }

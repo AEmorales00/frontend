@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService, Product } from '../../core/services/products.service';
+import { AlertService } from '../../core/alert.service';
 
 @Component({
   selector: 'app-product-edit',
@@ -20,7 +21,8 @@ export class Edit implements OnInit {
     private fb: FormBuilder,
     private products: ProductsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private alerts: AlertService
   ) {
     this.form = this.fb.group({
       name:        ['', [Validators.required, Validators.minLength(2)]],
@@ -69,7 +71,7 @@ export class Edit implements OnInit {
 
     this.products.update(this.id, payload).subscribe({
       next: () => {
-        alert('Producto actualizado ✔');
+        this.alerts.success('Producto actualizado ✔');
         this.router.navigateByUrl('/productos');
       },
       error: (e: any) => { this.error = e?.error?.message || 'No se pudo actualizar'; this.loading = false; }

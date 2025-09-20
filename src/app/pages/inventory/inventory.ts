@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InventoryService } from '../../services/inventory';
+import { AlertService } from '../../core/alert.service';
 
 @Component({
   selector: 'app-inventory',
@@ -15,7 +16,8 @@ export class InventoryComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private inventoryService: InventoryService
+    private inventoryService: InventoryService,
+    private alerts: AlertService
   ) {
     this.formularioInventario = this.fb.group({
       nombre: ['', Validators.required],
@@ -45,13 +47,13 @@ export class InventoryComponent implements OnInit {
       quantity: formData.cantidad,
     }).subscribe({
       next: (response: any) => {
-        alert('Inventario guardado');
+        this.alerts.success('Inventario guardado');
         this.formularioInventario.reset({ cantidad: 0 });
         this.cargarInventario(); // Recargar inventario después de guardar
       },
       error: (error: any) => {
         console.error('Error:', error);
-        alert('Error al guardar inventario');
+        this.alerts.error('Error al guardar inventario');
       }
     });
   }
@@ -78,8 +80,9 @@ export class InventoryComponent implements OnInit {
     this.editando = null;
   }
 
-  eliminarInventario(id: number): void {
-    if (!confirm('¿Eliminar este registro?')) return;
+  async eliminarInventario(id: number): Promise<void> {
+    const ok = await this.alerts.confirm('¿Eliminar este registro?');
+    if (!ok) return;
     this.inventoryService.eliminarInventario(id).subscribe({
       next: (_: any) => this.cargarInventario(),
       error: (err: any) => console.error('Error al eliminar:', err)

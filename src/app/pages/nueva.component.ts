@@ -3,6 +3,7 @@ import { CommonModule, DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductsService, Product } from '../core/services/products.service';
 import { SalesService } from '../core/services/sales.service';
+import { AlertService } from '../core/alert.service';
 import { BrowserMultiFormatReader } from '@zxing/browser';
 
 type CartItem = { product: Product; quantity: number; subtotal: number };
@@ -25,7 +26,7 @@ export class NuevaComponent implements OnDestroy {
   cart: CartItem[] = [];
   total = 0;
 
-  constructor(private products: ProductsService, private sales: SalesService) {}
+  constructor(private products: ProductsService, private sales: SalesService, private alerts: AlertService) {}
 
   ngOnDestroy(): void { this.stopScan(); }
 
@@ -62,7 +63,7 @@ export class NuevaComponent implements OnDestroy {
   onBarcode(code: string) {
     this.products.getByBarcode(code).subscribe({
       next: (p: Product) => this.addToCart(p, this.cantidad || 1),
-      error: () => alert(`Código ${code} no encontrado`)
+      error: () => this.alerts.error(`Código ${code} no encontrado`)
     });
   }
 
@@ -99,8 +100,8 @@ export class NuevaComponent implements OnDestroy {
     if (!this.cart.length) return;
     const items = this.cart.map(ci => ({ productId: ci.product.id, quantity: ci.quantity }));
     this.sales.create({ items }).subscribe({
-      next: (_: any) => { alert('Venta registrada ✔'); this.cart = []; this.total = 0; },
-      error: (e: any) => alert('Error al crear venta: ' + (e?.error?.message || ''))
+      next: (_: any) => { this.alerts.success('Venta realizada con éxito'); this.cart = []; this.total = 0; },
+      error: (e: any) => this.alerts.error('Error al crear venta: ' + (e?.error?.message || ''))
     });
   }
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductsService } from '../../core/services/products.service';
+import { AlertService } from '../../core/alert.service';
 
 @Component({
   selector: 'app-product-create',
@@ -14,7 +15,7 @@ export class Create {
   error = '';
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private products: ProductsService, private router: Router) {
+  constructor(private fb: FormBuilder, private products: ProductsService, private router: Router, private alerts: AlertService) {
     this.form = this.fb.group({
       name:        ['', [Validators.required, Validators.minLength(2)]],
       description: [''],
@@ -41,7 +42,7 @@ export class Create {
 
     this.products.create(payload).subscribe({
       next: () => {
-        alert('Producto creado ✔');
+        this.alerts.success('Producto creado ✔');
         this.router.navigateByUrl('/productos');
       },
       error: (e: any) => {

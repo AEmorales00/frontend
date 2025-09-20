@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 
@@ -9,19 +9,17 @@ import { AuthService } from '../core/services/auth.service';
   styleUrl: './layout.scss'
 })
 export class Layout {
-  userOpen = false;
-  sidebarOpen = false;
+  menuItems = [
+    { title: 'Dashboard', icon: 'pie-chart-outline', link: '/dashboard' },
+    { title: 'Productos', icon: 'cube-outline', link: '/productos' },
+    { title: 'Ventas', icon: 'file-text-outline', link: '/ventas' },
+  ];
 
   constructor(private auth: AuthService, private router: Router) {}
 
-  toggleUserMenu(event: Event) {
-    event.stopPropagation();
-    this.userOpen = !this.userOpen;
-  }
-
-  toggleSidebar(event?: Event) {
-    if (event) event.stopPropagation();
-    this.sidebarOpen = !this.sidebarOpen;
+  toggleSidebar() {
+    // Sidebar functionality can be implemented later with a different UI library
+    console.log('Toggle sidebar');
   }
 
   logout() {
@@ -29,6 +27,5 @@ export class Layout {
     this.router.navigateByUrl('/auth/login');
   }
 
-  @HostListener('document:click')
-  closeMenus() { this.userOpen = false; this.sidebarOpen = false; }
+  // Nebular handles menu interactions; no manual close needed
 }

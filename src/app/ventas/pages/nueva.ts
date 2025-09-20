@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductsService, Product } from '../../core/services/products.service';
 import { SalesService } from '../../core/services/sales.service';
+import { AlertService } from '../../core/alert.service';
 
 @Component({
   selector: 'app-nueva',
@@ -19,7 +20,8 @@ export class Nueva implements OnInit {
   constructor(
     private fb: FormBuilder,
     private productsService: ProductsService,
-    private salesService: SalesService
+    private salesService: SalesService,
+    private alerts: AlertService
   ) {
     this.form = this.fb.group({
       items: this.fb.array([])
@@ -102,7 +104,8 @@ export class Nueva implements OnInit {
     };
     this.salesService.create(payload).subscribe({
       next: () => {
-        this.success = 'Venta registrada correctamente';
+        this.alerts.success('Venta registrada correctamente');
+        this.success = null; // evita texto en pantalla; usamos modal
         // reinicia dejando una fila lista
         while (this.items.length) this.items.removeAt(0);
         this.addItem();
