@@ -1,13 +1,27 @@
-<h2>Productos</h2>
-<a routerLink="/productos/crear" class="btn">+ Nuevo</a>
-<a routerLink="/productos/importar" class="btn">⤓ Importar</a>
-<table class="table">
-  <tr><th>#</th><th>Nombre</th><th>Precio</th><th>Stock</th><th></th></tr>
-  <tr *ngFor="let p of productos; let i = index">
-    <td>{{i+1}}</td><td>{{p.name}}</td><td>{{p.price | currency:'GTQ'}}</td><td>{{p.stock}}</td>
-    <td>
-      <a [routerLink]="['/productos/editar', p.id]">Editar</a>
-      <button (click)="eliminar(p.id)">Eliminar</button>
-    </td>
-  </tr>
-</table>
+<h2>📦 Productos</h2>
+
+<div class="actions">
+  <a routerLink="/productos/crear" class="btn btn-primary"><span>+ Nuevo</span></a>
+  <a routerLink="/productos/importar" class="btn btn-outline"><span>⤓ Importar</span></a>
+  
+</div>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr><th>#</th><th>Nombre</th><th>Precio</th><th>Stock</th><th></th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of productos; let i = index">
+        <td>{{i+1}}</td>
+        <td>{{p.name}}</td>
+        <td class="num">Q. {{ p.price | number:'1.2-2' }}</td>
+        <td class="num">{{p.stock}}</td>
+        <td class="actions">
+          <a class="btn btn-sm btn-outline" [routerLink]="['/productos/editar', p.id]"><span>✏️ Editar</span></a>
+          <button class="btn btn-sm btn-danger" (click)="eliminar(p.id)"><span>🗑️ Eliminar</span></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

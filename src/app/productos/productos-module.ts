@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CurrencyPipe, DecimalPipe } from '@angular/common';
+import { SharedModule } from '../shared/shared-module';
 
 import { Productos } from './productos';
 import { ProductosRoutingModule } from './productos-routing-module';
@@ -23,6 +24,7 @@ import { Edit } from './pages/edit';
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
+    SharedModule,
     ProductosRoutingModule
   ],
   providers: [

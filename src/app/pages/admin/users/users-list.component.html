@@ -1,0 +1,40 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Usuarios</h3>
+    <a class="btn btn-primary" routerLink="nuevo">+ Nuevo</a>
+  </div>
+
+  <div *ngIf="loading">Cargando...</div>
+  <div *ngIf="error" class="text-danger">{{ error }}</div>
+
+  <table class="table table-striped align-middle" *ngIf="!loading">
+    <thead>
+      <tr>
+        <th>#</th><th>Nombre</th><th>Email</th><th>Roles</th><th>Estado</th><th style="width:200px;">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of users; index as i">
+        <td>{{ i+1 }}</td>
+        <td>{{ u.name }}</td>
+        <td>{{ u.email }}</td>
+        <td>
+          <span class="badge bg-secondary me-1" *ngFor="let r of u.roles">{{ r }}</span>
+        </td>
+        <td>
+          <span class="badge" [ngClass]="{
+            'bg-success': u.status==='ACTIVO',
+            'bg-warning text-dark': u.status==='BLOQUEADO',
+            'bg-secondary': u.status==='BAJA'
+          }">{{ u.status }}</span>
+        </td>
+        <td>
+          <a class="btn btn-sm btn-outline-primary me-2" [routerLink]="[u.id]">Editar</a>
+          <button class="btn btn-sm btn-outline-danger" (click)="remove(u)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- formularios se movieron a rutas dedicadas: /admin/usuarios/nuevo y /admin/usuarios/:id -->

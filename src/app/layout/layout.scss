@@ -56,6 +56,8 @@
   background: #343a40;
   color: white;
   z-index: 1000;
+  transform: translateX(0);
+  transition: transform .2s ease-in-out;
 }
 
 .menu {
@@ -94,4 +96,21 @@
   padding: 20px;
   flex: 1;
   overflow-y: auto;
+  transition: margin-left .2s ease-in-out;
+}
+
+/* Collapsed state */
+.sidebar-closed .sidebar {
+  transform: translateX(-100%);
+}
+.sidebar-closed .main-content {
+  margin-left: 0;
+}
+
+/* Responsive: default collapsed on small screens, opens with toggle */
+@media (max-width: 991.98px) {
+  .sidebar { transform: translateX(-100%); }
+  .layout:not(.sidebar-closed) .sidebar { transform: translateX(0); }
+  .sidebar:not(.force-open) { box-shadow: 2px 0 10px rgba(0,0,0,.2); }
+  .sidebar-closed .main-content { margin-left: 0; }
 }

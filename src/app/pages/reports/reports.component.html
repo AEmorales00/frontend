@@ -1,0 +1,86 @@
+<div class="container-fluid py-3">
+  <h3 class="mb-3">Reportes</h3>
+
+  <div *ngIf="loading">Cargando…</div>
+  <div *ngIf="err" class="text-danger">{{ err }}</div>
+
+  <div class="row g-3 row-cols-1 row-cols-sm-2 row-cols-lg-4 mb-2">
+    <div class="col"><div class="card h-100 shadow-sm"><div class="card-body">
+      <div class="text-muted">Ventas hoy</div>
+      <div class="h3 m-0">{{ kpis.today?.sales || 0 }}</div>
+    </div></div></div>
+    <div class="col"><div class="card h-100 shadow-sm"><div class="card-body">
+      <div class="text-muted">Ingresos hoy</div>
+      <div class="h3 m-0">{{ kpis.today?.revenue | number:'1.0-2' }}</div>
+    </div></div></div>
+    <div class="col"><div class="card h-100 shadow-sm"><div class="card-body">
+      <div class="text-muted">Margen hoy</div>
+      <div class="h3 m-0">{{ kpis.today?.margin | number:'1.0-2' }}</div>
+    </div></div></div>
+    <div class="col"><div class="card h-100 shadow-sm"><div class="card-body">
+      <div class="text-muted">Stock bajo</div>
+      <div class="h3 m-0">{{ kpis.lowStockCount || 0 }}</div>
+    </div></div></div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-12 col-lg-8">
+      <div class="card shadow-sm h-100">
+        <div class="card-header bg-white"><strong>Ventas últimos 30 días</strong></div>
+        <div class="card-body">
+          <canvas id="chartSales" class="w-100" style="max-height:320px;"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-header bg-white"><strong>Top productos</strong></div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item d-flex justify-content-between align-items-center"
+              *ngFor="let p of top">
+            <span class="text-truncate" style="max-width:70%">{{ p.name }}</span>
+            <span class="badge bg-primary rounded-pill">{{ p.qty }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3 mt-1">
+    <div class="col-12 col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-header bg-white"><strong>Ventas por vendedor</strong></div>
+        <div class="table-responsive">
+          <table class="table table-sm mb-0">
+            <thead><tr><th>Vendedor</th><th class="text-end">Tickets</th><th class="text-end">Ingresos</th><th class="text-end">Margen</th></tr></thead>
+            <tbody>
+              <tr *ngFor="let s of sellers">
+                <td>{{ s.seller }}</td>
+                <td class="text-end">{{ s.tickets }}</td>
+                <td class="text-end">{{ s.revenue | number:'1.0-2' }}</td>
+                <td class="text-end">{{ s.margin | number:'1.0-2' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-header bg-white"><strong>Stock bajo</strong></div>
+        <div class="table-responsive">
+          <table class="table table-sm mb-0">
+            <thead><tr><th>Producto</th><th class="text-end">Stock</th></tr></thead>
+            <tbody>
+              <tr *ngFor="let p of low">
+                <td class="text-truncate" style="max-width:65%">{{ p.name }}</td>
+                <td class="text-end">{{ p.stock }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

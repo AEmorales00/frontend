@@ -12,6 +12,7 @@ import { LayoutModule } from './layout/layout-module';
 
 
 import { App } from './app';
+import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { App } from './app';
     RouterOutlet,
     AuthModule,
     PagesModule,
-    LayoutModule
+    LayoutModule,
+    UnauthorizedComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }

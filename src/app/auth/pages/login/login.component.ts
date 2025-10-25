@@ -37,17 +37,18 @@ export class LoginComponent {
     this.loading = true;
     this.error = '';
 
-    // Usa AuthService y acepta 'token' o 'accessToken'
-    this.auth.login(this.form.value).subscribe({
-      next: (res: any) => {
-        const token = res?.accessToken || res?.token;
-        if (!token) {
-          this.error = 'Respuesta de login inválida';
-          this.loading = false;
-          return;
-        }
-        this.auth.token = token; // guarda en localStorage con la misma clave
-        this.router.navigateByUrl('/dashboard');
+    // Usa AuthService; acepta 'token'/'accessToken'; redirige por rol usando user del payload
+    const { email, password } = this.form.value;
+    this.auth.login({ email, password }).subscribe({
+      next: (user: any) => {
+        this.loading = false;
+        const roles: string[] = user?.roles || [];
+        console.log('[login] User after login:', user);
+        if (roles.includes('ADMIN'))      this.router.navigateByUrl('/admin/usuarios');
+        else if (roles.includes('JEFE'))  this.router.navigateByUrl('/dashboard');
+        else if (roles.includes('BODEGUERO')) this.router.navigateByUrl('/productos');
+        else if (roles.includes('VENDEDOR'))  this.router.navigateByUrl('/ventas/nueva');
+        else this.router.navigateByUrl('/');
       },
       error: (err) => {
         this.error = err?.error?.message || 'Error de autenticación';

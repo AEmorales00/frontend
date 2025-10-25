@@ -1,1 +1,188 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global theme inspired by Nebular (light) */
+
+:root {
+  --nb-color-primary: #3366ff;
+  --nb-color-primary-hover: #274bdb;
+  --nb-color-success: #00e096;
+  --nb-color-danger: #ff3d71;
+  --nb-color-info: #0095ff;
+  --nb-color-warning: #ffc94d;
+
+  --nb-bg: #f7f9fc;
+  --nb-surface: #ffffff;
+  --nb-text: #222b45;
+  --nb-muted: #8f9bb3;
+  --nb-border: #edf1f7;
+  --nb-shadow: 0 8px 20px rgba(44, 51, 73, 0.08);
+  --nb-radius: 12px;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: var(--nb-bg);
+  color: var(--nb-text);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Buttons (replace generic .btn styles) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  font-weight: 600;
+  line-height: 1;
+  border-radius: var(--nb-radius);
+  border: 1px solid transparent;
+  background: #e4e9f2;
+  color: #1a2138;
+  box-shadow: var(--nb-shadow);
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform .06s ease, background .15s ease, box-shadow .15s ease, border-color .15s ease, opacity .15s ease;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+.btn[disabled], .btn:disabled { opacity: .6; cursor: default; box-shadow: none; }
+
+.btn-primary { background: var(--nb-color-primary); color: #fff; }
+.btn-primary:hover { background: var(--nb-color-primary-hover); }
+
+.btn-secondary { background: #e4e9f2; color: #222b45; }
+
+.btn-danger { background: var(--nb-color-danger); color: #fff; }
+.btn-danger:hover { filter: brightness(.95); }
+
+.btn-success { background: var(--nb-color-success); color: #003; }
+
+.btn-outline { background: transparent; border-color: var(--nb-border); color: var(--nb-text); box-shadow: none; }
+.btn-outline:hover { border-color: var(--nb-color-primary); color: var(--nb-color-primary); }
+
+.btn-sm { padding: 6px 10px; font-weight: 600; border-radius: 10px; }
+
+/* Cards */
+.card, .nb-card, .table-responsive {
+  background: var(--nb-surface);
+  border: 1px solid var(--nb-border);
+  border-radius: var(--nb-radius);
+  box-shadow: var(--nb-shadow);
+  padding: 16px;
+}
+
+/* Tables */
+.table { width: 100%; border-collapse: separate; border-spacing: 0; }
+.table thead th {
+  background: #1a2138;
+  color: #fff;
+  text-align: left;
+  padding: 12px 14px;
+  font-weight: 700;
+}
+.table tbody td { padding: 12px 14px; border-bottom: 1px solid var(--nb-border); }
+.table tr:last-child td { border-bottom: none; }
+.table .num { text-align: right; }
+.table .actions { display: flex; gap: 8px; justify-content: flex-end; }
+.table .empty { text-align: center; color: var(--nb-muted); padding: 24px; }
+
+/* Forms */
+input, select, textarea {
+  background: #fff;
+  border: 1px solid var(--nb-border);
+  color: var(--nb-text);
+  border-radius: 10px;
+  padding: 8px 10px;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--nb-color-primary);
+  box-shadow: 0 0 0 3px rgba(51, 102, 255, .15);
+}
+
+/* Utility */
+.actions { display: flex; gap: 10px; margin: 10px 0 18px; }
+.error { color: var(--nb-color-danger); font-weight: 600; }
+.ok { color: var(--nb-color-success); font-weight: 600; }
+
+/* Layout tweaks */
+.layout-header { background: #fff; border-bottom: 1px solid var(--nb-border); box-shadow: var(--nb-shadow); }
+.sidebar { background: #222b45; color: #fff; }
+.menu .menu-item { color: #e4e9f2; display: flex; gap: 10px; padding: 10px 12px; border-radius: 8px; }
+.menu .menu-item:hover { background: rgba(255,255,255,.06); }
+
+/* ------------------ Responsive utilities (project-wide) ------------------ */
+/* Breakpoints */
+$bp-sm: 576px;
+$bp-md: 768px;
+$bp-lg: 992px;
+$bp-xl: 1200px;
+
+/* Containers */
+.container { width: 100%; margin-left: auto; margin-right: auto; padding-left: 16px; padding-right: 16px; }
+@media (min-width: $bp-sm) { .container { max-width: 540px; } }
+@media (min-width: $bp-md) { .container { max-width: 720px; } }
+@media (min-width: $bp-lg) { .container { max-width: 960px; } }
+@media (min-width: $bp-xl) { .container { max-width: 1140px; } }
+
+/* Grid (lightweight, Bootstrap‑like) */
+.row { display: flex; flex-wrap: wrap; margin-left: -8px; margin-right: -8px; }
+.row > * { padding-left: 8px; padding-right: 8px; }
+
+/* base 12‑cols */
+.col-12 { flex: 0 0 100%; max-width: 100%; }
+.col-6  { flex: 0 0 50%;  max-width: 50%; }
+.col-4  { flex: 0 0 33.3333%; max-width: 33.3333%; }
+.col-3  { flex: 0 0 25%; max-width: 25%; }
+
+/* responsive cols */
+@media (min-width: $bp-sm) {
+  .col-sm-12 { flex: 0 0 100%; max-width: 100%; }
+  .col-sm-6  { flex: 0 0 50%;  max-width: 50%; }
+  .col-sm-4  { flex: 0 0 33.3333%; max-width: 33.3333%; }
+}
+@media (min-width: $bp-md) {
+  .col-md-12 { flex: 0 0 100%; max-width: 100%; }
+  .col-md-8  { flex: 0 0 66.6667%; max-width: 66.6667%; }
+  .col-md-6  { flex: 0 0 50%;  max-width: 50%; }
+  .col-md-4  { flex: 0 0 33.3333%; max-width: 33.3333%; }
+}
+@media (min-width: $bp-lg) {
+  .col-lg-12 { flex: 0 0 100%; max-width: 100%; }
+  .col-lg-8  { flex: 0 0 66.6667%; max-width: 66.6667%; }
+  .col-lg-6  { flex: 0 0 50%;  max-width: 50%; }
+  .col-lg-4  { flex: 0 0 33.3333%; max-width: 33.3333%; }
+}
+
+/* Gutters (g‑*) */
+.g-1 { --g: 4px; }
+.g-2 { --g: 8px; }
+.g-3 { --g: 12px; }
+.g-4 { --g: 16px; }
+.row.g-1, .row.g-2, .row.g-3, .row.g-4 { margin-left: calc(var(--g) * -1); margin-right: calc(var(--g) * -1); }
+.row.g-1 > *, .row.g-2 > *, .row.g-3 > *, .row.g-4 > * { padding-left: var(--g); padding-right: var(--g); }
+
+/* Images & media */
+img, video, canvas { max-width: 100%; height: auto; }
+
+/* Tables: horizontal scroll on small screens */
+.table-responsive { overflow-x: auto; }
+@media (max-width: $bp-md) {
+  .table thead th, .table tbody td { padding: 10px; }
+}
+
+/* Forms on mobile: stack inputs */
+@media (max-width: $bp-sm) {
+  .actions { flex-wrap: wrap; }
+  .actions .btn { width: 100%; }
+  form .row { flex-direction: column; }
+}
+
+/* Headings responsive */
+h1 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); }
+h2 { font-size: clamp(1.3rem, 3vw, 2rem); }
+h3 { font-size: clamp(1.1rem, 2.5vw, 1.6rem); }

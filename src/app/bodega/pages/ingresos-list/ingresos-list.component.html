@@ -1,0 +1,34 @@
+<h1>📦 Bodega • Ingresos</h1>
+<div class="toolbar d-flex justify-content-between align-items-center mb-3">
+  <h2 class="m-0">Ingresos a bodega</h2>
+  <button type="button" class="btn btn-primary" routerLink="/bodega/ingresos/nuevo" consolog(si)>+ Nuevo</button>
+  </div>
+
+<div *ngIf="loading">Cargando...</div>
+<div *ngIf="error" class="text-danger">{{ error }}</div>
+
+<table *ngIf="!loading && !error" class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Fecha</th>
+      <th>Proveedor</th>
+      <th>Usuario</th>
+      <th>Total</th>
+      <th>Ítems</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of data">
+      <td>{{ p.id }}</td>
+      <td>{{ p.createdAt | date:'short' }}</td>
+      <td>{{ p.supplier?.name || '—' }}</td>
+      <td>{{ p.user?.name }}</td>
+      <td>{{ p.totalCost | number:'1.2-2' }}</td>
+      <td>{{ p.items?.length }}</td>
+    </tr>
+    <tr *ngIf="!data.length">
+      <td colspan="6" class="text-center text-muted">No hay ingresos registrados</td>
+    </tr>
+  </tbody>
+</table>

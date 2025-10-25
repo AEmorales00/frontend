@@ -1,12 +1,12 @@
-<div class="layout">
+<div class="layout" [class.sidebar-closed]="!sidebarOpen">
   <header class="layout-header">
     <button class="sidebar-toggle" (click)="toggleSidebar()">☰</button>
     <span class="app-title">SGC • Inventario</span>
     <div class="spacer"></div>
     <div class="user-actions">
-      <button class="user-menu" (click)="logout()">
+      <button class="user-menu" (click)="logout()" title="Cerrar sesión">
         <span>👤</span>
-        <span class="user-name">Admin</span>
+        <span class="user-name">Logout</span>
       </button>
     </div>
   </header>
