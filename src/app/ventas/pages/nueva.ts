@@ -47,7 +47,8 @@ export class Nueva implements OnInit {
     this.items.push(this.fb.group({
       productId: [null, Validators.required],
       quantity: [1, [Validators.required, Validators.min(1)]],
-      price: [null] // opcional; si no se envía, backend usa price del producto
+      // price opcional; inicia vacío para evitar que el input muestre "null"
+      price: ['']
     }));
   }
 
@@ -86,6 +87,13 @@ export class Nueva implements OnInit {
 
   total(): number {
     return this.items.controls.reduce((acc, _, i) => acc + this.lineTotal(i), 0);
+  }
+
+  // Placeholder amigable con moneda para el precio
+  placeholderPrice(i: number): string {
+    const prod = this.productById((this.items.at(i) as FormGroup).value.productId);
+    const price = Number(prod?.price ?? 0);
+    return `Q. ${price.toFixed(2)}`;
   }
 
   submit(): void {

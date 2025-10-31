@@ -24,7 +24,7 @@
             <option *ngFor="let p of productos" [ngValue]="p.id">{{ p.name }}</option>
           </select>
         </td>
-        <td class="num"><input type="number" min="0" step="0.01" formControlName="price" [placeholder]="productById(g.value.productId)?.price"></td>
+        <td class="num"><input type="number" min="0" step="0.01" formControlName="price" [attr.placeholder]="placeholderPrice(i)"></td>
         <td class="num"><input type="number" min="1" formControlName="quantity"></td>
         <td class="num">Q. {{ lineTotal(i) | number:'1.2-2' }}</td>
         <td><button type="button" class="btn btn-danger" (click)="removeItem(i)">✕</button></td>

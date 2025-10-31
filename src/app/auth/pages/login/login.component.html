@@ -7,7 +7,12 @@
     <small *ngIf="form.controls['email'].invalid && form.controls['email'].touched">Email inválido</small>
 
     <label>Contraseña</label>
-    <input type="password" formControlName="password" placeholder="********" />
+    <div class="password-field">
+      <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="********" />
+      <button type="button" class="toggle" (click)="togglePassword()" [attr.aria-pressed]="showPassword" aria-label="Mostrar u ocultar contraseña">
+        {{ showPassword ? '🙈' : '👁️' }}
+      </button>
+    </div>
     <small *ngIf="form.controls['password'].invalid && form.controls['password'].touched">Campo requerido</small>
 
     <button type="submit" [disabled]="form.invalid || loading">

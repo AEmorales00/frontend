@@ -15,6 +15,7 @@ export class LoginComponent {
   form: FormGroup;
   loading = false;
   error = '';
+  showPassword = false;
 
   constructor(
     private http: HttpClient,
@@ -27,6 +28,8 @@ export class LoginComponent {
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
+
+  togglePassword() { this.showPassword = !this.showPassword; }
 
   submit() {
     if (this.form.invalid) {
